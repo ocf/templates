@@ -3,9 +3,9 @@ required Hosted by OCF banner. We tried to contact your group prior to disabling
 your site, but we did not have a current contact email on file for your group.
 
 I've reenabled your virtual host. Please make sure your website has a Hosted by
-OCF banner and the required student group disclaimer [1] in order to avoid
+OCF banner and the required student group disclaimer[1] in order to avoid
 having it disabled again. You should also update your email address by logging
-in via SSH [2] and running the "update-email" command.
+in via SSH[2] and running the "update-email" command.
 
-[1] https://www.ocf.berkeley.edu/docs/services/vhost/
-[2] https://www.ocf.berkeley.edu/docs/services/shell/
+[1] https://ocf.io/vhost
+[2] https://ocf.io/ssh
