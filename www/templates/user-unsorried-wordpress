@@ -1,0 +1,12 @@
+I've re-enabled your account. It was disabled on {date} due to an
+outdated WordPress installation which was posing a security risk. We
+didn't have any contact information on file for you, so weren't able
+to contact you beforehand.
+
+You should log in to your account via SSH [1] and run the
+"update-email" command to set your email so that we can contact you in
+the future.
+
+Please also make sure to either remove or update the WordPress installation.
+
+[1] https://ocf.io/ssh
