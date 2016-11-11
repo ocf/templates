@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <style>
+            #variables > div {
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container" style="margin-top: 20px;">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="well">
+                        <ul id="nav" class="nav nav-stacked nav-pills"></ul>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="well">
+                        <noscript><p>You'd feel better if you enabled JavaScript.</p></noscript>
+
+                        <h2 style="margin-top: 0;" id="title"></h2>
+                        <div id="variables"></div>
+                        <textarea id="text" class="form-control" style="height: 400px;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script>
+            (function() {
+                var oldPage,
+                    text = '',
+                    values = {};
+
+                function updateText() {
+                    var content = text,
+                        vars = _.map(_.uniq(content.match(/{.+?}/g)), function(str) {
+                            return str.substring(1, str.length - 1);
+                        });
+
+                    if (!$('#variables').children().length) {
+                        _.each(vars, function(v) {
+                            $('<div>')
+                                .addClass('form-group')
+                                .append(
+                                    $('<label>')
+                                        .text(v)
+                                )
+                                .append(
+                                    $('<input type="text">')
+                                        .addClass('form-control')
+                                        .val(values[v] || '')
+                                        .keyup(function() {
+                                            values[v] = $(this).val();
+                                            updateText();
+                                        })
+                                )
+                                .appendTo('#variables');
+                        });
+                    }
+
+                    _.each(vars, function(v) {
+                        var search = '{' + v + '}',
+                            replace = values[v] || search;
+
+                        // fuck JavaScript
+                        content = content.split(search).join(replace);
+                    });
+
+                    $('#text').text(content);
+                }
+
+                function updatePage() {
+                    var page = (window.location.hash || '#').substring(1);
+
+                    if (oldPage === page) {
+                        return;
+                    }
+
+                    $('#title').text(page);
+                    $('#nav > li')
+                        .removeClass('active')
+                        .each(function() {
+                            el = $(this);
+                            if (el.data('template') === page) {
+                                $('#variables').empty();
+                                el.addClass('active');
+
+                                $.get('/templates/' + encodeURI(page), function(newText) {
+                                    text = newText;
+                                    updateText();
+                                });
+                            }
+                        });
+
+                }
+
+                $(document).ready(function() {
+                    var templates = {templates};
+
+                    _.each(templates, function(template) {
+                        $('<li>')
+                            .attr('role', 'presentation')
+                            .data('template', template)
+                            .append(
+                                $('<a>')
+                                    .text(template)
+                                    .attr('href', '#' + encodeURI(template))
+                            )
+                            .appendTo('#nav');
+                    });
+
+                    $(window).on('hashchange', updatePage);
+                    updateText();
+                    updatePage();
+                });
+            })();
+        </script>
+    </body>
+</html>
