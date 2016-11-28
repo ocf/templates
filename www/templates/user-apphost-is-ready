@@ -1,0 +1,13 @@
+Great, we've configured app hosting.
+
+You can log in to the apphost server (apphost.ocf.berkeley.edu) via
+SSH with the same username and password.
+
+Your temporary URL is http://{fqdn_with_dashes}.apphost.ocf.berkeley.edu/
+
+Once you've set up your new website, let us know and we will switch
+{fqdn} to point to the new app-hosted one.
+
+You can find documentation on our website: https://ocf.io/apphost
+
+Let us know if you have any questions.
