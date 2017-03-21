@@ -7,5 +7,5 @@ OCF banner and the required student group disclaimer[1] in order to avoid
 having it disabled again. You should also update your email address by logging
 in via SSH[2] and running the "update-email" command.
 
-[1] https://ocf.io/vhost
+[1] https://ocf.io/vhost#disclaimer
 [2] https://ocf.io/ssh
