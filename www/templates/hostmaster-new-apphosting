@@ -1,0 +1,16 @@
+Hi Hostmaster,
+
+Could you please drop the following records to the DNS:
+
+{hostname}.Berkeley.EDU. IN CNAME death.OCF.Berkeley.EDU.
+{hostname}.Berkeley.EDU. IN A 169.229.226.23
+{hostname}.Berkeley.EDU. IN AAAA 2607:f140:8801::1:23
+
+and replace them with:
+
+{hostname}.Berkeley.EDU. IN A 169.229.226.49
+{hostname}.Berkeley.EDU. IN AAAA 2607:f140:8801::1:49
+{hostname}.Berkeley.EDU. IN MX 5 anthrax.OCF.Berkeley.EDU.
+
+
+Thanks!
