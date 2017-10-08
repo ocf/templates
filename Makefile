@@ -19,3 +19,7 @@ push-image:
 .PHONY: test
 test:
 	tox
+
+.PHONY: clean
+clean:
+	rm -r .tox
