@@ -40,22 +40,22 @@ try {
 
             stash 'build'
         }
-    }
 
-    if (env.BRANCH_NAME == 'master') {
-        node('deploy') {
-            step([$class: 'WsCleanup'])
-            unstash 'build'
+        if (env.BRANCH_NAME == 'master') {
+            node('deploy') {
+                step([$class: 'WsCleanup'])
+                unstash 'build'
 
-            stage('push-to-registry') {
-                sh 'make push-image'
-            }
+                stage('push-to-registry') {
+                    sh 'make push-image'
+                }
 
-            stage('deploy-to-prod') {
-                build job: 'marathon-deploy-app', parameters: [
-                    [$class: 'StringParameterValue', name: 'app', value: 'templates'],
-                    [$class: 'StringParameterValue', name: 'version', value: version],
-                ]
+                stage('deploy-to-prod') {
+                    build job: 'marathon-deploy-app', parameters: [
+                        [$class: 'StringParameterValue', name: 'app', value: 'templates'],
+                        [$class: 'StringParameterValue', name: 'version', value: version],
+                    ]
+                }
             }
         }
     }
