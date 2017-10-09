@@ -22,44 +22,40 @@ try {
             sh 'make test'
         }
 
-        stage('test-cook-image') {
-            sh 'make cook-image'
-        }
-
         stash 'build'
     }
 
 
-    if (env.BRANCH_NAME == 'master') {
-        def version = new Date().format("yyyy-MM-dd-'T'HH-mm-ss")
-        withEnv([
-            "DOCKER_REVISION=${version}",
-        ]) {
-            node('slave') {
-                step([$class: 'WsCleanup'])
-                unstash 'build'
+    def version = new Date().format("yyyy-MM-dd-'T'HH-mm-ss")
+    withEnv([
+        "DOCKER_REVISION=${version}",
+    ]) {
+        node('slave') {
+            step([$class: 'WsCleanup'])
+            unstash 'build'
 
-                stage('cook-prod-image') {
-                    sh 'make cook-image'
-                }
-
-                stash 'build'
+            stage('cook-image') {
+                sh 'make cook-image'
             }
 
-            node('deploy') {
-                step([$class: 'WsCleanup'])
-                unstash 'build'
+            stash 'build'
+        }
+    }
 
-                stage('push-to-registry') {
-                    sh 'make push-image'
-                }
+    if (env.BRANCH_NAME == 'master') {
+        node('deploy') {
+            step([$class: 'WsCleanup'])
+            unstash 'build'
 
-                stage('deploy-to-prod') {
-                    build job: 'marathon-deploy-app', parameters: [
-                        [$class: 'StringParameterValue', name: 'app', value: 'templates'],
-                        [$class: 'StringParameterValue', name: 'version', value: version],
-                    ]
-                }
+            stage('push-to-registry') {
+                sh 'make push-image'
+            }
+
+            stage('deploy-to-prod') {
+                build job: 'marathon-deploy-app', parameters: [
+                    [$class: 'StringParameterValue', name: 'app', value: 'templates'],
+                    [$class: 'StringParameterValue', name: 'version', value: version],
+                ]
             }
         }
     }
