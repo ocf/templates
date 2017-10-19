@@ -1,0 +1,18 @@
+Hi ISP,
+
+Thank you for the report. We believe this is a false positive.
+
+The host in question runs Debian stable ("stretch") and has installed
+the apache2 package at version 2.4.25-3+deb9u3.
+
+Because the Debian security team backports patches to software without
+upgrading to a newer point release, the banner version says 2.4.25
+despite containing fixes for these CVEs.
+
+Here is documentation from Debian indicating that the version we are
+running contains patches for these two CVEs mentioned:
+
+https://security-tracker.debian.org/tracker/CVE-2017-9788
+https://security-tracker.debian.org/tracker/CVE-2017-9789
+
+Thanks,
