@@ -9,9 +9,10 @@ Because the Debian security team backports patches to software without
 upgrading to a newer point release, the banner version says 2.4.25
 despite containing fixes for these CVEs.
 
-Please consult Debian's security tracker at
-https://security-tracker.debian.org/tracker/source-package/apache2
-for documentation that the version we are running contains patches
-for the CVEs mentioned. (Refer to the links under "Resolved issues".)
+Here is documentation from Debian indicating that the version we are
+running contains patches for the CVEs mentioned:
+
+https://security-tracker.debian.org/tracker/CVE-{cve1}
+https://security-tracker.debian.org/tracker/CVE-{cve2}
 
 Thanks,
