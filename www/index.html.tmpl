@@ -8,6 +8,11 @@
             #variables > div {
                 margin-bottom: 10px;
             }
+
+            input.error {
+                background-color: #fcc;
+                border-color: #a94442;
+            }
         </style>
     </head>
     <body>
@@ -39,7 +44,16 @@
                     text = '',
                     values = {};
 
+                var preventSelection = function(e) {
+                    e.preventDefault();
+                }
+
                 function updateText() {
+                    // By default, assume the variables are filled and
+                    // text selection of the template is allowed
+                    $('#text').unbind('mousedown', preventSelection);
+                    $('#text').prop('readonly', false);
+
                     var content = text,
                         vars = _.map(_.uniq(content.match(/{.+?}/g)), function(str) {
                             return str.substring(1, str.length - 1);
@@ -55,10 +69,12 @@
                                 )
                                 .append(
                                     $('<input type="text">')
-                                        .addClass('form-control')
+                                        .addClass('form-control error')
                                         .val(values[v] || '')
                                         .keyup(function() {
                                             values[v] = $(this).val();
+                                            // If the field is empty, show it as errored
+                                            $(this).toggleClass('error', values[v] === "");
                                             updateText();
                                         })
                                 )
@@ -69,6 +85,14 @@
                     _.each(vars, function(v) {
                         var search = '{' + v + '}',
                             replace = values[v] || search;
+
+                        // Set the template text as not selectable and grey it
+                        // out to make it clear that not all the variables have
+                        // been filled
+                        if (!(v in values) || values[v] === "") {
+                            $('#text').bind('mousedown', preventSelection);
+                            $('#text').prop('readonly', true);
+                        }
 
                         // fuck JavaScript
                         content = content.split(search).join(replace);
