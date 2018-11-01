@@ -1,17 +1,8 @@
-FROM docker.ocf.berkeley.edu/theocf/debian:stretch
+FROM nginx
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        nginx \
-        python3 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y python3
 
-COPY www /srv/www
-COPY template.py /srv/
-COPY nginx.conf /srv/
-RUN /srv/template.py
+COPY www /usr/share/nginx/html/
+COPY template.py /tmp
 
-USER nobody
-
-CMD ["nginx", "-c", "/srv/nginx.conf", "-p", "/tmp"]
+RUN cd /usr/share/nginx/html && /tmp/template.py
