@@ -3,6 +3,4 @@ servicePipeline(
     deployTargets: ['templates'],
 )
 
-kubernetesPipeline()
-
 // vim: ft=groovy
