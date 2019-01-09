@@ -11,7 +11,7 @@ def main():
             json.dumps(sorted(filter(
                 lambda name: not name.startswith('.'),
                 os.listdir('/srv/www/templates'),
-            )))
+            ))),
         )
     with open('/srv/www/index.html', 'w') as f:
         f.write(content)
