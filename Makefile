@@ -1,3 +1,5 @@
+BIN := venv/bin
+
 DOCKER_REVISION ?= testing-$(USER)
 DOCKER_TAG = docker-push.ocf.berkeley.edu/templates:$(DOCKER_REVISION)
 RANDOM_PORT := $(shell expr $$(( 8000 + (`id -u` % 1000) + 1 )))
@@ -16,10 +18,23 @@ cook-image:
 push-image:
 	docker push $(DOCKER_TAG)
 
+venv: requirements.txt requirements-dev.txt
+	vendor/venv-update \
+			venv= $@ -ppython3 \
+			install= -r requirements.txt -r requirements-dev.txt
+
+.PHONY: install-hooks
+install-hooks: venv
+	$(BIN)/pre-commit install -f --install-hooks
+
 .PHONY: test
-test:
-	tox
+test: venv
+	$(BIN)/pre-commit run --all-files
 
 .PHONY: clean
 clean:
-	rm -r .tox
+	rm -rf venv
+
+.PHONY: update-requirements
+update-requirements: venv
+	$(BIN)/upgrade-requirements
