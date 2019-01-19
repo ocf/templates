@@ -1,10 +1,16 @@
 Hi {name},
 
-I've added you to the HPC user group, so you can now SSH into hpcctl and start running jobs.
-If you haven't already, please check out our HPC documentation to see how to get started: https://www.ocf.berkeley.edu/docs/services/hpc/
+I've added you to the HPC user group, so you can now SSH into
+hpcctl.ocf.berkeley.edu and start running jobs.
+If you haven't already, please check out our HPC documentation to see
+how to get started: https://www.ocf.berkeley.edu/docs/services/hpc/
 
-Please be mindful of other HPC users and try not to allocate all of our resources for more than a couple hours at a time.
+Please be mindful of other HPC users and try not to allocate all of our
+resources for more than a couple hours at a time.
 
-If you have any questions or issues using HPC, please let us know via email or on the #hpc_users channel on our IRC or Slack. You can find how to log into our IRC and Slack here: https://www.ocf.berkeley.edu/docs/contact/
+If you have any questions or issues using HPC, please let us know via
+email or on the #hpc_users channel on our IRC or Slack. You can find
+how to log into our IRC and Slack here:
+https://www.ocf.berkeley.edu/docs/contact/
 
 Welcome aboard!
