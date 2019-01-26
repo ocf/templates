@@ -1,0 +1,15 @@
+Hi Hostmaster,
+
+Could you please make the following changes to the DNS?
+
+Drop the following records:
+
+{hostname}.Berkeley.EDU. IN A 169.229.226.23 (single A, no PTR)
+{hostname}.Berkeley.EDU. IN AAAA 2607:f140:8801::1:23 (single AAAA, no PTR)
+
+And add the following records:
+
+{hostname}.Berkeley.EDU. IN A 169.229.226.49 (single A, no PTR)
+{hostname}.Berkeley.EDU. IN AAAA 2607:f140:8801::1:49 (single AAAA, no PTR)
+
+Thanks!
