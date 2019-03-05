@@ -39,9 +39,20 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: virtual-host-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($host = 'templates.ocf.io') {
+        return 308 https://templates.ocf.berkeley.edu$request_uri;
+      }
 spec:
   rules:
     - host: templates.ocf.berkeley.edu
+      http:
+        paths:
+          - backend:
+              serviceName: templates-service
+              servicePort: 80
+    - host: templates.ocf.io
       http:
         paths:
           - backend:
