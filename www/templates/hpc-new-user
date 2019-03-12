@@ -8,6 +8,10 @@ how to get started: https://www.ocf.berkeley.edu/docs/services/hpc/
 Please be mindful of other HPC users and try not to allocate all of our
 resources for more than a couple hours at a time.
 
+Also, please note that hpcctl is a low-powered login server,
+and all the CPUs, memory, and GPUs are on corruption.
+You'll only be able to access them through Slurm.
+
 If you have any questions or issues using HPC, please let us know via
 email or on the #hpc_users channel on our IRC or Slack. You can find
 how to log into our IRC and Slack here:
