@@ -1,4 +1,4 @@
-FROM docker.ocf.berkeley.edu/theocf/debian:stretch
+FROM docker.ocf.berkeley.edu/theocf/debian:buster
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
