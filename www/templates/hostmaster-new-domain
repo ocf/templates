@@ -2,8 +2,10 @@ Hi Hostmaster,
 
 Could you please add the following records to the DNS?
 
-{hostname}.Berkeley.EDU. IN A 169.229.226.23 (single A, no PTR)
-{hostname}.Berkeley.EDU. IN AAAA 2607:f140:8801::1:23 (single AAAA, no PTR)
-{hostname}.Berkeley.EDU. IN MX 5 anthrax.OCF.Berkeley.EDU.
+{hostname}. Berkeley.EDU IN A 169.229.226.23
+(single A, no PTR)
+{hostname}. Berkeley.EDU IN AAAA 2607:f140:8801::1:23
+(single AAAA, no PTR)
+{hostname}. Berkeley.EDU IN MX 5 anthrax.OCF.Berkeley.EDU
 
 Thanks!
