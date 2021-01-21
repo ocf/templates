@@ -1,7 +1,7 @@
 BIN := venv/bin
 
 DOCKER_REVISION ?= testing-$(USER)
-DOCKER_TAG = harbor.ocf.berkeley.edu/library/templates:$(DOCKER_REVISION)
+DOCKER_TAG = docker-push.ocf.berkeley.edu/templates:$(DOCKER_REVISION)
 RANDOM_PORT := $(shell expr $$(( 8000 + (`id -u` % 1000) + 1 )))
 
 
