@@ -10,7 +10,7 @@ They have been requested on behalf of a registered university organization.
 {hostname}.Berkeley.EDU IN MX 5 anthrax.OCF.Berkeley.EDU
 
 The following answers have been provided by the university organization:
-1. The purpose of the hostname, who will be using it, and its 
+1. The purpose of the hostname, who will be using it, and its
    relationship to the university's mission
 {university_purpose}
 
@@ -18,7 +18,7 @@ The following answers have been provided by the university organization:
 Name: {university_contact_name}
 Email: {university_contact_email}
 
-3. Acknowledgment that all relevant university policies will be followed, 
+3. Acknowledgment that all relevant university policies will be followed,
    including those pertaining to campus website accessibility
 Acknowledged by {university_contact_name}
 
