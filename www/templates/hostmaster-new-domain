@@ -1,11 +1,25 @@
 Hi Hostmaster,
 
-Could you please add the following records to the DNS?
+Could you please add the following records to the DNS? 
+They have been requested on behalf of a registered university organization.
 
 {hostname}.Berkeley.EDU IN A 169.229.226.23
 (single A, no PTR)
 {hostname}.Berkeley.EDU IN AAAA 2607:f140:8801::1:23
 (single AAAA, no PTR)
 {hostname}.Berkeley.EDU IN MX 5 anthrax.OCF.Berkeley.EDU
+
+The following answers have been provided by the university organization:
+1. The purpose of the hostname, who will be using it, and its 
+   relationship to the university's mission
+{university_purpose}
+
+2. A responsible contact for the hostname
+Name: {university_contact_name}
+Email: {university_contact_email}
+
+3. Acknowledgment that all relevant university policies will be followed, 
+   including those pertaining to campus website accessibility
+Acknowledged by {university_contact_name}
 
 Thanks!
