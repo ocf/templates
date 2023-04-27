@@ -12,20 +12,20 @@ def objects():
         name="templates",
         image=get_image_tag("templates"),
         ports=[3000],
-    ))
+    )).build()
 
     yield(svc := Service(
         name="templates",
         selector=dep.get_selector(),
         port_on_pod=3000,
         port_on_svc=80,
-    ))
+    )).build()
 
     yield Ingress.from_svc(
         svc=svc,
         host="templates.ocf.berkeley.edu",
         path_prefix="/",
-    )
+    ).build()
 
 
 def images():
