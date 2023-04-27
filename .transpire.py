@@ -8,18 +8,18 @@ name = "templates"
 
 
 def objects():
-    yield dep := Deployment(
+    yield(dep := Deployment(
         name="templates",
         image=get_image_tag("templates"),
         ports=[3000],
-    )
+    ))
 
-    yield svc := Service(
+    yield(svc := Service(
         name="templates",
         selector=dep.get_selector(),
         port_on_pod=3000,
         port_on_svc=80,
-    )
+    ))
 
     yield Ingress.from_svc(
         svc=svc,
