@@ -1,17 +1,12 @@
-FROM docker.ocf.berkeley.edu/theocf/debian:buster
+FROM docker.io/_/python:3.11-slim as builder
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        nginx \
-        python3 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+COPY www /build/www
+COPY template.py .
 
-COPY www /srv/www
-COPY template.py /srv/
-COPY nginx.conf /srv/
-RUN /srv/template.py
+RUN python template.py /build/www/index.html.tmpl /build/www/templates /build/www/index.html
 
-USER nobody
 
-CMD ["nginx", "-c", "/srv/nginx.conf", "-p", "/tmp"]
+FROM docker.io/lipanski/docker-static-website:2.1.0
+
+COPY --from=builder /build/www/ ./
+
