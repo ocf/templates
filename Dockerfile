@@ -1,4 +1,4 @@
-FROM docker.io/_/python:3.11-slim as builder
+FROM docker.io/python:3.11-slim as builder
 
 COPY www /build/www
 COPY template.py .
