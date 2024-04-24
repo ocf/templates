@@ -1,13 +1,13 @@
 Hi Hostmaster,
 
-Could you please add the following records to the DNS?
-They have been requested on behalf of the following registered university organization:
+Could you please add the following record to the DNS?
+They have been requested on behalf of the following registered student organization:
 
 {group_name} - CalLink OID: {callink_oid}
 {hostname}.studentorg.Berkeley.EDU. IN CNAME hosting.OCF.Berkeley.EDU.
 
-The following answers have been provided by the university organization:
-1. The purpose of the hostname
+The following answers have been provided by the student organization:
+1. The purpose of the hostname and who will be using it
 
 {university_purpose}
 
