@@ -29,5 +29,5 @@ def objects():
 
 
 def images():
-    yield Image(name="templates", path=Path("/"))
+    yield Image(name="templates", path=Path("/"), registry="ghcr")
 
