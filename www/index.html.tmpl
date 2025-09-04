@@ -31,6 +31,7 @@
                         <h2 style="margin-top: 0;" id="title"></h2>
                         <div id="variables"></div>
                         <textarea id="text" class="form-control" style="height: 400px;"></textarea>
+                        <button onclick="copyText()">Copy text</button>
                     </div>
                 </div>
             </div>
@@ -146,6 +147,15 @@
                     updatePage();
                 });
             })();
+
+            function copyText() {
+                var copyText = document.getElementById("text");
+                var msgTitle = document.getElementById("title");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); // For mobile devices
+                navigator.clipboard.writeText(copyText.value);
+                alert("Copied the text: " + msgTitle.value);
+            }
         </script>
     </body>
 </html>
