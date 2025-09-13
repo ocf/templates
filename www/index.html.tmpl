@@ -21,6 +21,10 @@
             .fresh {
                 color:#000;
             }
+
+            .notready {
+                color:#000;
+            }
         </style>
     </head>
     <body>
@@ -102,6 +106,7 @@
                         if (!(v in values) || values[v] === "") {
                             $('#text').bind('mousedown', preventSelection);
                             $('#text').prop('readonly', true);
+                            buttonNotReady();
                         }
 
                         // fuck JavaScript
@@ -163,18 +168,28 @@
                 window.copyText = () => {
                     const copy_button = document.getElementById("button");
                     // Copy text to clipboard onclick.
-                    const copyText = document.getElementById("text");
-                    const title = document.getElementById("title");
-                    navigator.clipboard.writeText(copyText.value);
+                    if (copy_button.className == 'notready') {
+                        buttonNotReady();
+                    }
+                    else {
+                        const copyText = document.getElementById("text");
+                        const title = document.getElementById("title");
+                        navigator.clipboard.writeText(copyText.value);
 
-                    // Button text change from "Copy Text" to "Copied", and text turns grey.
-                    copy_button.innerHTML = 'Copied';
-                    copy_button.className = 'copied';
+                        // Button text change from "Copy Text" to "Copied", and text turns grey.
+                        copy_button.innerHTML = 'Copied';
+                        copy_button.className = 'copied';
+                    }
                 }
 
                 window.refreshButton = () => {
                     copy_button.innerHTML = 'Copy Text';
                     copy_button.className = 'fresh';
+                }
+
+                window.buttonNotReady = () => {
+                    copy_button.innerHTML = 'Not all fields are filled';
+                    copy_button.className = 'notready';
                 }
             })();
 
