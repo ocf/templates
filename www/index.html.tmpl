@@ -168,8 +168,6 @@
             else {
                 const copyText = document.getElementById("text");
                 const title = document.getElementById("title");
-                copyText.select();
-                copyText.setSelectionRange(0, 99999); // For mobile devices
                 navigator.clipboard.writeText(copyText.value);
 
             // Button text change from "Copy Text" to "Copied", and text turns grey.
