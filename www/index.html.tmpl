@@ -13,6 +13,14 @@
                 background-color: #f66;
                 border-color: #a94442;
             }
+
+            .copied {
+                color:#888;
+            }
+
+            .fresh {
+                color:#000;
+            }
         </style>
     </head>
     <body>
@@ -31,7 +39,7 @@
                         <h2 style="margin-top: 0;" id="title"></h2>
                         <div id="variables"></div>
                         <textarea id="text" class="form-control" style="height: 400px;"></textarea>
-                        <button id="button" onclick="copyText()">Copy text</button>
+                        <button style="margin-top: 20px;" id="button" class="fresh" onclick="copyText()">Copy Text</button>
                     </div>
                 </div>
             </div>
@@ -40,6 +48,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script>
+            const copy_button = document.getElementById("button");
             (function() {
                 var oldPage,
                     text = '',
@@ -76,6 +85,7 @@
                                             values[v] = $(this).val();
                                             // If the field is empty, show it as errored
                                             $(this).toggleClass('error', values[v] === "");
+                                            refreshButton();
                                             updateText();
                                         })
                                 )
@@ -120,6 +130,7 @@
 
                                 $.get('/templates/' + encodeURI(page), function(newText) {
                                     text = newText;
+                                    refreshButton();
                                     updateText();
                                 });
                             }
@@ -143,19 +154,40 @@
                     });
 
                     $(window).on('hashchange', updatePage);
+                    refreshButton();
                     updateText();
                     updatePage();
                 });
-                
+            })();
+
             function copyText() {
-                var copyText = document.getElementById("text");
-                var title = document.getElementById("title");
+            // Copy text to clipboard onclick.
+            if (!(v in values) || values[v] === "") {
+                copy_button.innerHTML = 'Not all fields are filled';
+            }
+            else {
+                const copyText = document.getElementById("text");
+                const title = document.getElementById("title");
                 copyText.select();
                 copyText.setSelectionRange(0, 99999); // For mobile devices
                 navigator.clipboard.writeText(copyText.value);
-                alert("Copied the text: " + title.value);
+
+            // Button text change from "Copy Text" to "Copied", and text turns grey.
+                copy_button.innerHTML = 'Copied';
+                copy_button.className = 'copied';
             }
-            })();
+            }
+
+            function refreshButton() {
+                if (!(v in values) || values[v] === "") {
+                    copy_button.innerHTML = 'Not all fields are filled';
+                }
+                else {
+                    copy_button.innerHTML = 'Copy Text';
+                }
+                copy_button.className = 'fresh';
+            }
+
         </script>
     </body>
 </html>
