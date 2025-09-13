@@ -13,6 +13,14 @@
                 background-color: #f66;
                 border-color: #a94442;
             }
+
+            .copied {
+                color:#888;
+            }
+
+            .fresh {
+                color:#000;
+            }
         </style>
     </head>
     <body>
@@ -40,6 +48,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script>
+            const copy_button = document.getElementById("button");
             (function() {
                 var oldPage,
                     text = '',
