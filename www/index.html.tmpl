@@ -157,35 +157,28 @@
                     updateText();
                     updatePage();
                 });
+
+                const copy_button = document.getElementById("button");
+
+                window.copyText = () => {
+                    const copy_button = document.getElementById("button");
+                    // Copy text to clipboard onclick.
+                    const copyText = document.getElementById("text");
+                    const title = document.getElementById("title");
+                    navigator.clipboard.writeText(copyText.value);
+
+                    // Button text change from "Copy Text" to "Copied", and text turns grey.
+                    copy_button.innerHTML = 'Copied';
+                    copy_button.className = 'copied';
+                }
+
+                window.refreshButton = () => {
+                    copy_button.innerHTML = 'Copy Text';
+                    copy_button.className = 'fresh';
+                }
             })();
 
-            function copyText() {
-            const copy_button = document.getElementById("button");
-            // Copy text to clipboard onclick.
-            if (!(v in values) || values[v] === "") {
-                copy_button.innerHTML = 'Not all fields are filled';
-            }
-            else {
-                const copyText = document.getElementById("text");
-                const title = document.getElementById("title");
-                navigator.clipboard.writeText(copyText.value);
 
-            // Button text change from "Copy Text" to "Copied", and text turns grey.
-                copy_button.innerHTML = 'Copied';
-                copy_button.className = 'copied';
-            }
-            }
-
-            function refreshButton() {
-            const copy_button = document.getElementById("button");
-                if (!(v in values) || values[v] === "") {
-                    copy_button.innerHTML = 'Not all fields are filled';
-                }
-                else {
-                    copy_button.innerHTML = 'Copy Text';
-                }
-                copy_button.className = 'fresh';
-            }
         </script>
     </body>
 </html>
