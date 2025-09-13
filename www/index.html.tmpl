@@ -48,7 +48,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script>
-            const copy_button = document.getElementById("button");
             (function() {
                 var oldPage,
                     text = '',
@@ -85,6 +84,7 @@
                                             values[v] = $(this).val();
                                             // If the field is empty, show it as errored
                                             $(this).toggleClass('error', values[v] === "");
+                                            refreshButton();
                                             updateText();
                                         })
                                 )
@@ -129,6 +129,7 @@
 
                                 $.get('/templates/' + encodeURI(page), function(newText) {
                                     text = newText;
+                                    refreshButton();
                                     updateText();
                                 });
                             }
@@ -152,10 +153,39 @@
                     });
 
                     $(window).on('hashchange', updatePage);
+                    refreshButton();
                     updateText();
                     updatePage();
                 });
             })();
+
+            function copyText() {
+            const copy_button = document.getElementById("button");
+            // Copy text to clipboard onclick.
+            if (!(v in values) || values[v] === "") {
+                copy_button.innerHTML = 'Not all fields are filled';
+            }
+            else {
+                const copyText = document.getElementById("text");
+                const title = document.getElementById("title");
+                navigator.clipboard.writeText(copyText.value);
+
+            // Button text change from "Copy Text" to "Copied", and text turns grey.
+                copy_button.innerHTML = 'Copied';
+                copy_button.className = 'copied';
+            }
+            }
+
+            function refreshButton() {
+            const copy_button = document.getElementById("button");
+                if (!(v in values) || values[v] === "") {
+                    copy_button.innerHTML = 'Not all fields are filled';
+                }
+                else {
+                    copy_button.innerHTML = 'Copy Text';
+                }
+                copy_button.className = 'fresh';
+            }
         </script>
     </body>
 </html>
