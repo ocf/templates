@@ -49,7 +49,6 @@
             </div>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script>
             (function() {
@@ -62,37 +61,43 @@
                 };
 
                 function updateText() {
+                    const textField = document.getElementById("text");
+
                     // By default, assume the variables are filled and
                     // text selection of the template is allowed
-                    $('#text').unbind('mousedown', preventSelection);
-                    $('#text').prop('readonly', false);
+                    textField.removeEventListener("mousedown", preventSelection);
+                    textField.readonly = false;
 
                     var content = text,
                         vars = _.map(_.uniq(content.match(/{.+?}/g)), function(str) {
                             return str.substring(1, str.length - 1);
                         });
 
-                    if (!$('#variables').children().length) {
+                    if (!document.getElementById('variables').children.length) {
                         _.each(vars, function(v) {
-                            $('<div>')
-                                .addClass('form-group')
-                                .append(
-                                    $('<label>')
-                                        .text(v)
-                                )
-                                .append(
-                                    $('<input type="text">')
-                                        .addClass('form-control error')
-                                        .val(values[v] || '')
-                                        .keyup(function() {
-                                            values[v] = $(this).val();
-                                            // If the field is empty, show it as errored
-                                            $(this).toggleClass('error', values[v] === "");
-                                            refreshButton();
-                                            updateText();
-                                        })
-                                )
-                                .appendTo('#variables');
+                            const formGroupDiv = document.createElement('div');
+                            formGroupDiv.classList.add('form-group');
+
+                            const label = document.createElement('label');
+                            label.textContent = v;
+
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.classList.add('form-control', 'error');
+                            input.value = values[v] || '';
+
+                            input.addEventListener('keyup', function () {
+                                values[v] = this.value;
+                                // Toggle the 'error' class based on the value
+                                this.classList.toggle('error', values[v] === '');
+                                refreshButton();
+                                updateText();
+                            });
+
+                            formGroupDiv.appendChild(label);
+                            formGroupDiv.appendChild(input);
+
+                            document.getElementById('variables').appendChild(formGroupDiv);
                         });
                     }
 
@@ -104,8 +109,8 @@
                         // out to make it clear that not all the variables have
                         // been filled
                         if (!(v in values) || values[v] === "") {
-                            $('#text').bind('mousedown', preventSelection);
-                            $('#text').prop('readonly', true);
+                            textField.addEventListener("mousedown", preventSelection);
+                            textField.readonly = true;
                             buttonNotReady();
                         }
 
@@ -113,7 +118,7 @@
                         content = content.split(search).join(replace);
                     });
 
-                    $('#text').text(content);
+                    textField.textContent = content;
                 }
 
                 function updatePage() {
@@ -123,41 +128,40 @@
                         return;
                     }
 
-                    $('#title').text(page);
-                    $('#nav > li')
-                        .removeClass('active')
-                        .each(function() {
-                            el = $(this);
-                            if (el.data('template') === page) {
-                                $('#variables').empty();
-                                el.addClass('active');
+                    const navItems = document.querySelectorAll('#nav > li');
+                    navItems.forEach(item => item.classList.remove('active'));
+                    navItems.forEach(item => {
+                        if (item.dataset.template === page) {
+                            document.getElementById('variables').innerHTML = '';
+                            item.classList.add('active');
 
-                                $.get('/templates/' + encodeURI(page), function(newText) {
+                            fetch('/templates/' + encodeURIComponent(page))
+                                .then(response => response.text())
+                                .then(newText => {
                                     text = newText;
                                     refreshButton();
                                     updateText();
                                 });
-                            }
-                        });
-
+                        }
+                    });
                 }
 
-                $(document).ready(function() {
-                    var templates = {templates};
+                document.addEventListener('DOMContentLoaded', () => {
+                    const templates = {templates};
 
-                    _.each(templates, function(template) {
-                        $('<li>')
-                            .attr('role', 'presentation')
-                            .data('template', template)
-                            .append(
-                                $('<a>')
-                                    .text(template)
-                                    .attr('href', '#' + encodeURI(template))
-                            )
-                            .appendTo('#nav');
+                    templates.forEach(template => {
+                        const li = document.createElement('li');
+                        li.setAttribute('role', 'presentation');
+                        li.dataset.template = template;
+
+                        const a = document.createElement('a');
+                        a.textContent = template;
+                        a.href = '#' + encodeURIComponent(template);
+
+                        li.appendChild(a);
+                        document.getElementById('nav').appendChild(li);
                     });
-
-                    $(window).on('hashchange', updatePage);
+                    window.addEventListener('hashchange', updatePage);
                     refreshButton();
                     updateText();
                     updatePage();
